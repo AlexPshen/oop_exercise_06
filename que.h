@@ -119,21 +119,23 @@ void queue<T, Allocator>::insert_to_num(int pos, const T& value) {
 
 template <class T, class Allocator>
 void queue<T, Allocator>::insert(queue<T, Allocator>::forward_iterator& ptr, const T& value) {
-    auto val = std::unique_ptr<element>(new element{value});
-    forward_iterator it = this->begin();
-    if (ptr == this->begin()) {
-        val->next_element = std::move(first);
-        first = std::move(val);
-        return;
-    }
-    while ((it.ptr_ != nullptr) && (it.ptr_->next() != ptr)) {
-        ++it;
-    }
-    if (it.ptr_ == nullptr) {
-        throw std::logic_error ("ERROR");
-    }
-    val->next_element = std::move(it.ptr_->next_element);
-    it.ptr_->next_element = std::move(val);
+     element* nd = this->allocator_.allocate(1);
+     std::allocator_traits<allocator_type>::construct(this->allocator_, nd, value);
+     auto val = unique_ptr(nd, deleter{&this->allocator_});
+     forward_iterator it = this->begin();
+     if (ptr == this->begin()) {
+            val->next_element = std::move(first);
+            first = std::move(val);
+            return;
+     }
+     while ((it.ptr_ != nullptr) && (it.ptr_->next() != ptr)) {
+            ++it;
+     }
+     if (it.ptr_ == nullptr) {
+            throw std::logic_error ("ERROR");
+     }
+     val->next_element = std::move(it.ptr_->next_element);
+     it.ptr_->next_element = std::move(val);
 }
 
 template <class T, class Allocator>
