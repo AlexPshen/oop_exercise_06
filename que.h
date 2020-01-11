@@ -181,7 +181,9 @@ void queue<T, Allocator>::pop() {
 
 template <class T, class Allocator>
 void queue<T, Allocator>::push(const T& value) {
-    element* result = this->allocator_.allocate(1);
+    forward_iterator it = this -> end();
+    insert(it, value);
+    /*element* result = this->allocator_.allocate(1);
     std::allocator_traits<allocator_type>::construct(this -> allocator_, result, value);
     if (!first) {
         first = unique_ptr(result, deleter{&this->allocator_});
@@ -189,7 +191,7 @@ void queue<T, Allocator>::push(const T& value) {
         return;
     }
     endl->next_element = unique_ptr(result, deleter{&this->allocator_});
-    endl = endl->next_element.get();
+    endl = endl->next_element.get(); */
 }
 
 template <class T, class Allocator>
@@ -205,6 +207,8 @@ typename queue<T, Allocator>::forward_iterator queue<T, Allocator>::element::nex
     return forward_iterator(this->next_element.get());
 }
 
+
+// forw_it
 template<class T, class Allocator>
 queue<T, Allocator>::forward_iterator::forward_iterator(queue<T, Allocator>::element *ptr) {
     ptr_ = ptr;
