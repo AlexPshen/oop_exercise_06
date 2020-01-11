@@ -1,0 +1,15 @@
+insert 0 0 0 1 1 0
+0
+print_all
+insert 0 0 0 2 2 0
+0
+print_all
+insert 0 0 0 3 3 0
+1
+print_all
+erase 0
+print_all
+erase 1
+print_all
+exit
+
