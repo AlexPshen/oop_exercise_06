@@ -59,27 +59,27 @@ void vector<T>::push_back(const T &value) {
 
 template<class T>
 void vector<T>::erase(int pos) {
-    std::unique_ptr<T[]> newData(new T[cap]);
+    std::unique_ptr<T[]> newd(new T[cap]);
     for (int i = 0; i < size; ++i) {
         if (i < pos) {
-            newData[i] = data[i];
+            newd[i] = data[i];
         } else if (i > pos) {
-            newData[i - 1] = data[i];
+            newd[i - 1] = data[i];
         }
     }
-    data = std::move(newData);
+    data = std::move(newd);
     size--;
 }
 
 
 template<class T>
 void vector<T>::resize(int size) {
-    std::unique_ptr<T[]> newData(new T[size]);
+    std::unique_ptr<T[]> newd(new T[size]);
     int n = std::min(size, this->size);
     for (int i = 0; i < n; ++i) {
-        newData[i] = data[i];
+        newd[i] = data[i];
     }
-    data = std::move(newData);
+    data = std::move(newd);
     this->size = n;
     cap = size;
 }

@@ -12,17 +12,21 @@ int main() {
     for (;;) {
         std::string comm;
         std::cin >> comm;
-        if (comm == "push") {
+        if (comm == "add") {
             triangle<double> tr(std::cin);
             q.push(tr);
-        } else if (comm == "top") {
+        } else if (comm == "print_top") {
             q.top().print(std::cout);
         } else if (comm == "pop") {
             q.pop();
+        } else if (comm == "insert"){
+            triangle<double> tr(std::cin); 
+            std::cin >> pos;
+             q.insert_to_num(pos, tr);
         } else if (comm == "erase") {
             std::cin >> pos;
             q.erase_to_num(pos);
-        } else if (comm == "all") {
+        } else if (comm == "print_all") {
             std::for_each(q.begin(), q.end(), [](triangle<double> &tr) { return tr.print(std::cout); });
         } else if (comm == "exit") {
             break;
@@ -34,7 +38,7 @@ int main() {
             std::for_each(mp.begin(), mp.end(), [](std::pair<double, double> X) {std::cout << X.first << " " << X.second << ", ";});
             std::cout << '\n';
         } else {
-            std::cout << "ERROR" << std::endl;
+            std::cout << "ERROR: unknown command" << std::endl;
             continue;
         }
     }

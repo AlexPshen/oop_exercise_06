@@ -50,7 +50,7 @@ template<class T, size_t ALLOC_SIZE>
     template<class T, size_t ALLOC_SIZE>
     T* my_allocator<T, ALLOC_SIZE>::allocate(std::size_t n) {
         if(n != 1){
-            throw std::logic_error("This allocator can't allocate arrays");
+            throw std::logic_error("This allocator can't allocate");
         }
         if(size_t(memory_pool_end - memory_pool_tail) < sizeof(T)){
             if(free_blocks.get_size()){
@@ -69,7 +69,7 @@ template<class T, size_t ALLOC_SIZE>
     template<class T, size_t ALLOC_SIZE>
     void my_allocator<T, ALLOC_SIZE>::deallocate(T* ptr, std::size_t n) {
         if(n != 1){
-            throw std::logic_error("This allocator can't allocate arrays");
+            throw std::logic_error("This allocator can't allocate");
         }
         if(ptr == nullptr){
             return;
